@@ -88,5 +88,10 @@ class ActorViewController: UIViewController {
 Imagine that you have been given a project that has this GithubProjectViewController. The GithubProjectViewController should be used to display high-level information about a GitHub project. However, it’s also responsible for finding out if there’s network connectivity, connecting to GitHub, parsing the responses and persisting information to disk. It is also one of the biggest classes in the project.
 
 How might you improve the design of this view controller?
+
+### Before answering the final question, insert a job description for an iOS developer position of your choice!
+Your answer for Question 7 should be targeted to the company/job-description you chose.
+### Selected job
+I want to work in Google so I decided to choose [iOS Software Engineer, Swift Developer](https://www.google.com/about/careers/jobs#!t=jo&jid=/google/ios-software-engineer-swift-developer-1600-amphitheatre-pkwy-mountain-view-ca-9620001&) vacancy from Google Career.
 ## Question 7
 If you were to start your iOS developer position today, what would be your goals a year from now?
