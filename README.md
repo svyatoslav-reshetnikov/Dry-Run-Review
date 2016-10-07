@@ -1,8 +1,15 @@
 # Dry-Run Review
 ## Question 1
 What have you learned recently about iOS development? How did you learn it? Has it changed your approach to building apps?
+## Answer 1
+Recently I have learned few things about iOS development. 
+First thing I have recently learned is some utilites for more effective job - Reveal app, Pixel perfect app, Pusher, Laurine and SwiftGen. I learned this ones on the CocoaHeads meetup in Moscow. 
+Second thing I have recently learned is new approaches to building architecture of me iOS apps. I learned this approaches from the Udacity iOS Nanodegree and other data sources - Stackoverflow, Github etc.
 ## Question 2
 Can you talk about a framework that you've used recently (Apple or third-party)? What did you like/dislike about the framework?
+## Answer 2
+I'd like to tell about RxSwift framework. I used one in all of my project because it makes code writing process more comfortable. Also RxSwift avoids callback-hell and makes my code shorter and easier for understanding others.
+Also I started to use Realm because this framework is quicker and easier for understanding then CoreData. I think than CoreData is too complex for understanding and i prefer to use KISS principe. Realm make my programs shorter and better.
 ## Question 3
 Describe how you would construct a Twitter feed application (here is an example of Udacity's Twitter feed) that at minimum can display a company's Twitter page. Please include information about any classes/structs that you would use in the app. Which classes/structs would be the model(s), the controller(s), and the view(s)?
 ## Answer 3
