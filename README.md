@@ -52,6 +52,38 @@ We should be smart and thriffty when we're working with UITableView through data
 This approaches allow us to get above 60 FPS.
 ## Question 5
 Imagine that you have been given a project that has this ActorViewController. The ActorViewController should be used to display information about an actor. However, to send information to other ViewControllers, it uses NSUserDefaults. Does this make sense to you? How would you send information from one ViewController to another one?
+## Answer 5
+I think that the use of NSUserDefaults for complex models is a very stupid solution because it's making program syntax is too complex and has a low performance. I would prefer to use Realm:
+```swift
+import UIKit
+import RealmSwift
+
+class Actor: Object {
+    dynamic var name = ""
+    dynamic var image = ""
+    dynamic var bio = ""
+}
+
+class ActorViewController: UIViewController {
+    
+    @IBOutlet weak var actorNameLabel: UILabel!
+    @IBOutlet weak var actorImageView: UIImageView!
+    @IBOutlet weak var actorBio: UITextView!
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Get the default Realm
+        let realm = try! Realm()
+        // Query Realm for all actors
+        let actors = realm.objects(Actor.self)
+        
+        actorNameLabel.text = actors[0].name
+        actorImageView.image = UIImage(named: actors[0].image)
+        actorBio.text = actors[0].bio
+    }
+}
+```
 ## Question 6
 Imagine that you have been given a project that has this GithubProjectViewController. The GithubProjectViewController should be used to display high-level information about a GitHub project. However, it’s also responsible for finding out if there’s network connectivity, connecting to GitHub, parsing the responses and persisting information to disk. It is also one of the biggest classes in the project.
 
