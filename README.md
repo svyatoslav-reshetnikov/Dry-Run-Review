@@ -42,6 +42,14 @@ I would prefer to describe a process of building this application as step-by-ste
 I think that this app can be extend with contacts, feedback form and other functions.
 ## Question 4
 Describe some techniques that can be used to ensure that a UITableView containing many UITableViewCell is displayed at 60 frames per second.
+## Answer 4
+This is a very interesting question and I'd like to tell you about my approach to this. My approach consist of understanding how is working UITableView and some techniques for work with one.
+
+At first, Apple Engineers realized a good idea with dequeuing reusable cells. The basic idea here is that instead of performing complex operations to create a new cell every time we need one, we simply recycle cells and other table components when they are no longer in view, update the state of the view elements with new data and reuse it.
+
+We should be smart and thriffty when we're working with UITableView through data source and delegate. Apple is using UITableViewDelegate and UITableViewDataSource for set content of a table. In method cellForRowAtIndexPath we can to set content of a UITableViewCell. Taking into account the fact that cells is reusable, we should to use background threads for hard tasks in cellForRowAtIndexPath method - downloading data, complex calculations, animations etc.
+
+This approaches allow us to get above 60 FPS.
 ## Question 5
 Imagine that you have been given a project that has this ActorViewController. The ActorViewController should be used to display information about an actor. However, to send information to other ViewControllers, it uses NSUserDefaults. Does this make sense to you? How would you send information from one ViewController to another one?
 ## Question 6
