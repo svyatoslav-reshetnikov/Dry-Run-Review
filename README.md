@@ -88,6 +88,163 @@ class ActorViewController: UIViewController {
 Imagine that you have been given a project that has this GithubProjectViewController. The GithubProjectViewController should be used to display high-level information about a GitHub project. However, it’s also responsible for finding out if there’s network connectivity, connecting to GitHub, parsing the responses and persisting information to disk. It is also one of the biggest classes in the project.
 
 How might you improve the design of this view controller?
+## Answer 6
+I have worked with file and I have a lot of ideas how I can to improve it.
+
+At first, we should use some persistence library for saving network data. I prefer to use Realm. Then we should add network functions in other class in order to make a good and easy-to use architecture. See code below:
+```swift
+import UIKit
+import RealmSwift
+
+class GitHubProjectViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    // project UI
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var completionPercentage: UILabel!
+    @IBOutlet weak var openIssues: UILabel!
+    @IBOutlet weak var closedIssues: UILabel!
+    @IBOutlet weak var allIssuesTable: UITableView!
+    @IBOutlet weak var contributorsCollection: UICollectionView!
+    
+    // new issue UI
+    
+    @IBOutlet weak var newIssueName: UITextField!
+    @IBOutlet weak var newIssueDescription: UITextView!
+    @IBOutlet weak var postNewIssueButton: UIButton!
+    
+    // Realm
+    // Get the default Realm
+    let realm = try! Realm()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        allIssuesTable.delegate = self
+        allIssuesTable.dataSource = self
+        
+        contributorsCollection.delegate = self
+        contributorsCollection.dataSource = self
+        
+        newIssueName.hidden = true
+        newIssueDescription.hidden = true
+        postNewIssueButton.hidden = true
+        
+        callFunctionFromAPIManager()
+    }
+    
+    func makeCallsToGithubAPI() {
+        // All of the network calls happen in the github API and we can access them through the API Singleton
+    }
+    
+    @IBAction func newIssueButtonPressed(sender: AnyObject) {
+        newIssueName.hidden = false
+        newIssueDescription.hidden = false
+        postNewIssueButton.hidden = false
+    }
+    
+    @IBAction func postNewIssueButtonPressed(sender: AnyObject) {
+        postNewIssue()
+    }
+    
+    func postNewIssue() {
+        APIManager.instance.postNewIssue(success, error) {
+            if error != nil {
+                // Handle the error
+            } else {
+                //update UI
+                // Call method reloadData() for allIssuesTable
+            }
+            
+        }
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return realm.objects(Project.self)[0].issues.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("IssueCell") as! IssueCell
+        // [code that stylizes the cell]
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // The comments and other data are being loaded by the GitHubAPI class, so we can access them via the Singleton
+        // [code that pushes a new view controller with comment data]
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return realm.objects(Project.self)[0].contributors.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = contributorsCollection.dequeueReusableCellWithReuseIdentifier("ContributorCell", forIndexPath: indexPath) as! ContributorCell
+        // [code that stylizes the cell]
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath:NSIndexPath) {
+        // The code for the network Query happens in the GitHubAPI and we can access the model objects when needed.
+        // [code that pushes a new view controller with contributor data]
+    }
+}
+
+class Issue: Object {
+    dynamic var name = ""
+    dynamic var description = ""
+    dynamic var additionalInfo = ""
+}
+
+class Contributor: Object {
+    dynamic var name = ""
+    dynamic var bio = ""
+}
+
+class Project: Object {
+    dynamic var name = ""
+    dynamic var completionPercentage = 0
+    let issues = List<Issue>()
+    let contributors = List<Contributor>()
+}
+
+class APIManager {
+    
+    static let instance = APIManager()
+    
+    typealias callback = (_ result: AnyObject!, _ error: Error?) -> Void
+    
+    /* This class is responsible for making the API network calls to Github and returns callbacks with the results.  */
+    func taskForGETMethod(var urlString: String, parameters: [String : AnyObject]?, callback: callback) -> NSURLSessionDataTask {
+        /* Make parameters for the network call
+         * Create a session and task.
+         * Check our status code
+         * Proceed with Parsing the JSON
+         * Return the task
+         */
+        /* GUARD: For a successful status respose*/
+        
+    }
+    
+    func taskForPostMethod(var urlString: String, parameters: [String : AnyObject]?, callback: callback) -> NSURLSessionDataTask {
+        /* Make parameters for the network call
+         * Create a session and task.
+         * Check our status code
+         * Proceed with Parsing the JSON
+         * Return the task
+         */
+        /* GUARD: For a successful status respose*/
+    }
+    
+    class func parseJSONDataWithCompletionHandler(data: NSData, callback: callback -> Void) {
+        //Parse JSON and return it via the completion handler
+    }
+}
+
+extension APIManager {
+    //Convenience methods for getting data from the GithubAPI
+}
+```
 
 ### Before answering the final question, insert a job description for an iOS developer position of your choice!
 Your answer for Question 7 should be targeted to the company/job-description you chose.
