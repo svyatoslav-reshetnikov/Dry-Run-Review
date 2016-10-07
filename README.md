@@ -95,3 +95,12 @@ Your answer for Question 7 should be targeted to the company/job-description you
 I want to work in Google so I decided to choose [iOS Software Engineer, Swift Developer](https://www.google.com/about/careers/jobs#!t=jo&jid=/google/ios-software-engineer-swift-developer-1600-amphitheatre-pkwy-mountain-view-ca-9620001&) vacancy from Google Career.
 ## Question 7
 If you were to start your iOS developer position today, what would be your goals a year from now?
+## Answer 7
+If i was to start selected iOS developer position today, I would have a list of goals a year from now:
+
+1. Accept the company's values and follow them. I know that Google care about user happiness and my main goal a year from now is design and implement new user-facing features in Google’s products.
+2. Collaborate with Google's designers to create innovative user experiences. I really like to work with designers because synthesis of creative and technical minds creates great ideas and products.
+3. Develop prototypes quickly to validate interactions and prove product designs. I think that this is a very lean methodology of development and I prefer to use it in my job.
+4. Write client-side code to create fast, easy-to-use, high volume production applications.
+5. Build the helpful libraries and frameworks for Google's products. I'm sure that I can to optimize existing architecture and make it easier and re-used.
+6. Self-improving in a non-stop mode. I think that Google is a greatest tech company all over the world and this company are required people with strong tech knowledge and beautiful minds. I want to meet the company level, so I'm regularity improving basic science (Computer Science, algorythms and data structures, mathematics etc) and program languages (Swift, Objective-C, Python, Java etc). Also I'm learning new sciences (Machine learning, neural networks, data science and data analysis, deep learning, UI and UX design for mobile applicatons etc). A year from now I want to finish at least 2 Udacity's nanodegree - Machine Learning and Self-Driving cars.
