@@ -16,8 +16,81 @@ Second thing I have recently learned is new approaches to building architecture 
 ## Question 2
 Can you talk about a framework that you've used recently (Apple or third-party)? What did you like/dislike about the framework?
 ## Answer 2
-I'd like to tell about RxSwift framework. I used one in all of my project because it makes code writing process more comfortable. Also RxSwift avoids callback-hell and makes my code shorter and easier for understanding others.
-Also I started to use Realm because this framework is quicker and easier for understanding then CoreData. I think than CoreData is too complex for understanding and i prefer to use KISS principe. Realm make my programs shorter and better.
+I'd like to tell about RxSwift framework. I used one in all of my project because it makes code writing process more comfortable. Also RxSwift avoids callback-hell and makes my code shorter and easier for understanding others. For example, see usual code for UITableView -UITableViewDelegate and UITableViewDataSource functions:
+```swift
+override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+    let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell //or your custom class
+
+    // Configure the cell...
+
+    return cell
+}
+
+func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+    let selectedItem = tableViewItems.objectAtIndex(indexPath.row) as String
+    // Some code for handling click on tableViewItem
+}
+```
+Then RxSwift:
+```swift
+tableViewItems.asObservable()
+    .bindTo(tableView.rx_itemsWithCellFactory) { tableView, row, tableViewItem in
+        let cell = tableView.dequeueReusableCellWithIdentifier("TableViewCell") as! tableViewCell
+        // Some code for fill cell with tableViewItem fields
+        return cell
+    }
+    .addDisposableTo(disposeBag)
+    
+tableView.rx_modelSelected(TableViewItem)
+    .subscribeNext { tableViewItem in
+        // Some code for handling click on tableViewItem
+    }
+    .addDisposableTo(disposeBag)
+```
+RxSwift has a tableViewItems - if we have a new version of tableViewItems from server, we don't need to use tableView.reloadData() because RxSwift already binded data (tableViewItems) and tableView. It's make me happy :-)
+Also I started to use Realm because this framework is quicker and easier for understanding then CoreData. I think than CoreData is too complex for understanding and i prefer to use KISS principe. Realm make my programs shorter and better. I want to show you code from the [Realm official page](https://realm.io/docs/swift/latest/)
+```swift
+// Define your models like regular Swift classes
+class Dog: Object {
+  dynamic var name = ""
+  dynamic var age = 0
+}
+class Person: Object {
+  dynamic var name = ""
+  dynamic var picture: NSData? = nil // optionals supported
+  let dogs = List<Dog>()
+}
+
+// Use them like regular Swift objects
+let myDog = Dog()
+myDog.name = "Rex"
+myDog.age = 1
+print("name of dog: \(myDog.name)")
+
+// Get the default Realm
+let realm = try! Realm()
+
+// Query Realm for all dogs less than 2 years old
+let puppies = realm.objects(Dog.self).filter("age < 2")
+puppies.count // => 0 because no dogs have been added to the Realm yet
+
+// Persist your data easily
+try! realm.write {
+  realm.add(myDog)
+}
+
+// Queries are updated in realtime
+puppies.count // => 1
+
+// Query and update from any thread
+DispatchQueue(label: "background").async {
+  let realm = try! Realm()
+  let theDog = realm.objects(Dog.self).filter("age == 1").first
+  try! realm.write {
+    theDog!.age = 3
+  }
+}
+```
 ## Question 3
 Describe how you would construct a Twitter feed application (here is an example of Udacity's Twitter feed) that at minimum can display a company's Twitter page. Please include information about any classes/structs that you would use in the app. Which classes/structs would be the model(s), the controller(s), and the view(s)?
 ## Answer 3
