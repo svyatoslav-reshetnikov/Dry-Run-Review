@@ -3,8 +3,16 @@
 What have you learned recently about iOS development? How did you learn it? Has it changed your approach to building apps?
 ## Answer 1
 Recently I have learned few things about iOS development. 
-First thing I have recently learned is some utilites for more effective job - Reveal app, Pixel perfect app, Pusher, Laurine and SwiftGen. I learned this ones on the CocoaHeads meetup in Moscow. 
-Second thing I have recently learned is new approaches to building architecture of me iOS apps. I learned this approaches from the Udacity iOS Nanodegree and other data sources - Stackoverflow, Github etc.
+First thing I have recently learned is some utilites for more effective job:
+
+1. Reveal app. This tool is analogue of WebInspector for WebKit and allow us to research hierarchy of UIKit objects in real-time mode.
+2. Pixel perfect app. This tool allow us to compare UI moscups and developer results and to find discrepancies.
+3. Pusher. This tool is a simple hosted API for quickly, easily and securely integrating realtime bi-directional functionality via WebSockets to web and mobile apps, or any other Internet connected device.
+4. Laurine. This tool is a localization code generator, intended to end the constant problems that localizations present for developers.
+5. SwiftGen. This tool is a suite of tools to auto-generate Swift code for various assets of our project.
+I learned this ones on the CocoaHeads meetup in Moscow. 
+
+Second thing I have recently learned is new approaches to building architecture of my iOS apps. I learned this approaches from the Udacity iOS Nanodegree and other data sources - Stackoverflow, Github etc. For example, I improved my knowledge about MVC pattern and learned MVVM pattern with RxSwift. MVC is a 3 layer pattern - Model, View and Controller. I prefer to use it in small projects because in large projects Model-View-Controller performs to MassiveViewController :-) In large projects I prefer to use MVVM - Model, View, ViewModel - because a lot of code is in ViewModel and it's easier for understanding and unit-testing of code.
 ## Question 2
 Can you talk about a framework that you've used recently (Apple or third-party)? What did you like/dislike about the framework?
 ## Answer 2
