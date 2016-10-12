@@ -16,7 +16,7 @@ Second thing I have recently learned is new approaches to building architecture 
 ## Question 2
 Can you talk about a framework that you've used recently (Apple or third-party)? What did you like/dislike about the framework?
 ## Answer 2
-I'd like to tell about RxSwift framework. RxSwift is a realization of a ReactiveX project for Swift. ReactiveX is a is a combination of the best ideas from the Observer pattern, the Iterator pattern, and functional programming. I used one in all of my project because it avoids callback-hell and makes my code shorter and easier for understanding others. RxSwift has a few things you should know before you'll to use it:
+I'd like to tell about RxSwift framework. RxSwift is a realization of a ReactiveX project for Swift. ReactiveX is a combination of the best ideas from the Observer pattern, the Iterator pattern, and functional programming. I used one in all of my project because it avoids callback-hell and makes my code shorter and easier for understanding others. RxSwift has a few things you should know before you'll to use it:
 
  1. Observable - an object that generates data.
  2. Subscriber - an object that follows data from Observable.
@@ -64,7 +64,8 @@ tableView
     .addDisposableTo(disposeBag)
 ```
 RxSwift has a tableViewItems - if we have a new version of tableViewItems from server, we don't need to use tableView.reloadData() because RxSwift already binded data (tableViewItems) and tableView. 
-Also I started to use Realm because this framework is quicker and easier for understanding then CoreData. I think than CoreData is too complex for understanding and i prefer to use KISS principe. Realm make my programs shorter and better. I want to show you code from the [Realm official page](https://realm.io/docs/swift/latest/)
+
+Also I started to use Realm because this framework is quicker and easier for my understanding then CoreData. I want to show you code from the [Realm official page](https://realm.io/docs/swift/latest/)
 ```swift
 // Define your models like regular Swift classes
 class Dog: Object {
