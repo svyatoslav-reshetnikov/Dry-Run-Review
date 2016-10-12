@@ -16,7 +16,13 @@ Second thing I have recently learned is new approaches to building architecture 
 ## Question 2
 Can you talk about a framework that you've used recently (Apple or third-party)? What did you like/dislike about the framework?
 ## Answer 2
-I'd like to tell about RxSwift framework. I used one in all of my project because it makes code writing process more comfortable. Also RxSwift avoids callback-hell and makes my code shorter and easier for understanding others. For example, see usual code for UITableView -UITableViewDelegate and UITableViewDataSource functions:
+I'd like to tell about RxSwift framework. RxSwift is a realization of a ReactiveX project for Swift. ReactiveX is a is a combination of the best ideas from the Observer pattern, the Iterator pattern, and functional programming. I used one in all of my project because it avoids callback-hell and makes my code shorter and easier for understanding others. RxSwift has a few things you should know before you'll to use it:
+
+ 1. Observable - an object that generates data.
+ 2. Subscriber - an object that follows data from Observable.
+ 3. Variable - an object that generates event when its value is changed.
+ 4. addDisposableTo - Observable can completes in a non-deterministic way. You should use this function for correct finish of Observable.
+For example, see usual code for UITableView -UITableViewDelegate and UITableViewDataSource functions:
 ```swift
 override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
     let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell //or your custom class
@@ -33,21 +39,31 @@ func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIn
 ```
 Then RxSwift:
 ```swift
-tableViewItems.asObservable()
+// Variable - array of any object items 
+// Variable([Any])
+tableViewItems
+    // Make Variable object as Observable object
+    .asObservable()
+    // bindTo is an operator which allows us to create connect between objects
+    // In this example I created connect between array of items and table view rows
     .bindTo(tableView.rx_itemsWithCellFactory) { tableView, row, tableViewItem in
         let cell = tableView.dequeueReusableCellWithIdentifier("TableViewCell") as! tableViewCell
         // Some code for fill cell with tableViewItem fields
         return cell
     }
     .addDisposableTo(disposeBag)
-    
-tableView.rx_modelSelected(TableViewItem)
+
+tableView
+    // Calling delegate method for table view clicked
+    // I prefer to use rx_modelSelected because usually I need an object which associated with a cell
+    .rx_modelSelected(TableViewItem)
+    // Subscribe on click events
     .subscribeNext { tableViewItem in
         // Some code for handling click on tableViewItem
     }
     .addDisposableTo(disposeBag)
 ```
-RxSwift has a tableViewItems - if we have a new version of tableViewItems from server, we don't need to use tableView.reloadData() because RxSwift already binded data (tableViewItems) and tableView. It's make me happy :-)
+RxSwift has a tableViewItems - if we have a new version of tableViewItems from server, we don't need to use tableView.reloadData() because RxSwift already binded data (tableViewItems) and tableView. 
 Also I started to use Realm because this framework is quicker and easier for understanding then CoreData. I think than CoreData is too complex for understanding and i prefer to use KISS principe. Realm make my programs shorter and better. I want to show you code from the [Realm official page](https://realm.io/docs/swift/latest/)
 ```swift
 // Define your models like regular Swift classes
